@@ -10,6 +10,7 @@
 #200221 libgtkhtml updated to 2.12, fixes the 200219 crash.
 #200223 changed forum link to murga. 200714 change to easyos.org/forum
 #20210525 changed forum link.
+#20240330 QV
 
 export TEXTDOMAIN=easyhelp
 export OUTPUT_CHARSET=UTF-8
@@ -29,8 +30,8 @@ if [ ! -f /usr/share/locale/${xNEWLANG}/LC_MESSAGES/easyhelp.mo ];then
 fi
 export LANGUAGE="$xNEWLANG"
 
-MSGb1="$(gettext 'EasyOS jumping off page')"
-MSGb2="$(gettext 'This page has links to discover more about Easy, and join the user community.')"
+MSGb1="$(gettext 'QV jumping off page')"
+MSGb2="$(gettext 'This page has links to discover more about QV, and join the user community.')"
 MSGb3="$(gettext 'Have fun!')"
 MSGs1="$(gettext 'Getting started')"
 MSGs2="$(gettext 'Local')"
@@ -63,9 +64,9 @@ cat >> ${NEWFILE} <<_EOF
 <html>
 <head>
  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
- <title>EasyOS</title>
+ <title>QV Home page</title>
  <meta name="author" content="Barry Kauler">
- <meta name="description" content="easyos easy linux help puppy quirky distribution">
+ <meta name="description" content="easyos easy linux help puppy quirky qv void distribution">
 </head>
 <body>
  <table cellspacing="2" cellpadding="2" border="0" width="640" align="center">
