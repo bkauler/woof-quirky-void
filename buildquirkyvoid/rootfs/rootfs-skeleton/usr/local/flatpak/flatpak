@@ -17,6 +17,7 @@
 #20231213 firefox: fix start 2nd instance. ref: https://discourse.mozilla.org/t/how-does-firefox-discover-a-running-instance-to-connect-to/109957
 #20240120 fix start and stop client dbus-daemon
 #20240329 remove "EasyOS" in messages. fix for QV.
+#20240330 help to run as root.
 
 if [ "$(whoami)" != "root" ];then
  if [ -x /usr/bin/sudo-sh ];then
@@ -678,14 +679,42 @@ $(gettext 'Click the OK button for some final useful information...')\"</label><
 "
 gtkdialog --center --program=FP_DLG5
 
+PPM_VOID_MSG="$(gettext 'Be warned that some Flatpak apps will not run as root. Some will but may have an internal sandbox that needs to be disabled; examples are Chrome and Firefox, that will require <b>--no-sandbox</b> appended to the invocation of the executable.')
+$(gettext 'There are a couple of different ways to flip an application to run as the root user. Here is one of them:')
+    
+<b>1: .bin</b>
+$(gettext 'Take the example of the word processor Abiword. You will find /usr/bin/abiword, but also there is /usr/bin/abiword.bin. All that you have to do is execute the latter and Abiword will run as the root user. You can edit /usr/share/applications/abiword.desktop and a desktop icon if one exists, to run abiword.bin. Or just run abiword.bin in a terminal.')
+    "
 
-M3="$(gettext 'However, you may prefer to run some apps as the root user, a file-manager for example, where you want unfettered access to the entire filesystem, able to open, edit and save anywhere.')"
+export DLG_PPM_VOID="<window resizable=\"false\" title=\"Flapi: Help administrator\" image-name=\"/usr/share/pixmaps/flatpak.png\" window_position=\"1\">
+ <vbox>
+  <text use-markup=\"true\">
+   <label>\"${PPM_VOID_MSG}\"</label><variable>VAR_PPM_VOID</variable>
+  </text>
+  <hbox>
+   <button><label>Close</label><action type=\"closewindow\">VAR_PPM_VOID</action></button>
+  </hbox></vbox></window>"
+
+
+#M3="$(gettext 'However, you may prefer to run some apps as the root user, a file-manager for example, where you want unfettered access to the entire filesystem, able to open, edit and save anywhere.')"
 export FP_DLG6="<window title=\"$(gettext 'Flatpak Installer: notes')\" image-name=\"/usr/share/pixmaps/flatpak.png\">
   <vbox>
     <frame>
       <text use-markup=\"true\"><label>\"<b>$(gettext 'Security notes')</b>\"</label></text>
-      <text use-markup=\"true\"><label>\"$(gettext 'As has been stated in the previous window, the Flatpak has been installed to run as a non-root user. In fact, each Flatpak runs as its own separate user. This provides isolation between apps, in other words, extra security.')
-${M3}\"</label></text>
+      <text use-markup=\"true\"><label>\"$(gettext 'As has been stated in the previous window, the Flatpak has been installed to run as a non-root user. In fact, each Flatpak runs as its own separate user. This provides isolation between apps, in other words, extra security.')\"</label></text>
+    </frame>
+    
+    <frame>
+     <text use-markup=\"true\"><label>\"<b>$(gettext 'Administrator')</b>\"</label></text>
+     <hbox>
+      <text><label>$(gettext 'You may want some applications to have system-wide write permission, such as a file manager. Warning though; some Flatpak apps will not run as administrator, or may require special setup to do so. It is very easy to flip to run as administrator (root user). Click button for explanation:')</label></text>
+      <vbox>
+       <button>
+        <input file>/usr/local/lib/X11/mini-icons/mini-question.xpm</input>
+        <action type=\"launch\">DLG_PPM_VOID</action>
+       </button>
+      </vbox>
+     </hbox>
     </frame>
     
     <frame>
