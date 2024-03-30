@@ -13,7 +13,7 @@ export LANG=C
 
 . /etc/rc.d/functions4puppy4
 . /etc/DISTRO_SPECS
-. /etc/rc.d/BOOTCONSTRAINED #has BOOT_DISABLESWAP, BOOT_ATIME, BOOT_DIRTYWRITE.
+. /etc/rc.d/BOOTCONSTRAINED #has BOOT_DISABLESWAP, BOOT_DIRTYWRITE.
 . /etc/rc.d/PUPSTATE #initramfs has started this. BOOT_DEV, BOOT_FS, BOOT_DIR, WKG_DEV, WKG_FS, WKG_DIR
 
 status_func() {
@@ -174,16 +174,17 @@ ln -snf /tmp/run /var/run
 mkdir /tmp/apphome
 for aH in `ls -1 /home | tr '\n' ' '`
 do
+ mkdir -p /tmp/apphome/${aH}/cache
+ chown -R ${aH}:${aH} /tmp/apphome/${aH}
  if [ -d /home/${aH}/.cache ];then
   if [ ! -h /home/${aH}/.cache ];then
    rm -rf /home/${aH}/.cache
-   ln -s /tmp/apphome/${aH} /home/${aH}/.cache
+   ln -s /tmp/apphome/${aH}/cache /home/${aH}/.cache
   fi
  fi
- mkdir /tmp/apphome/${aH}
- chown ${aH}:${aH} /tmp/apphome/${aH}
 done
 #...NOTE: it may be necessary to save some of this at shutdown.
+
 
 #20240117 for easyvoid
 if [ -d /var/service ];then #20240119 precaution, in case it somehow got created.
@@ -745,18 +746,6 @@ else
   echo kyber > /sys/block/${WKG_DRV}/queue/scheduler
  fi
 fi
-
-##20210124 var name changed from BOOT_SCHEDULER to BOOT_SCHEDULER_SSD
-#if [ "$BOOT_SCHEDULER_SSD" ];then #120704 see /etc/rc.d/BOOTCONSTRAINED, variable set in 3buildeasydistro.
-# WKG_DRV="`echo -n "$WKG_DEV" | sed -e 's%[0-9]*$%%' -e 's%p$%%'`" #mmcblk0p2 becomes mmcblk0
-# SSDflg="$(cat /sys/block/${WKG_DRV}/queue/rotational)" #0 if ssd, 1 if hdd
-# if [ "$SSDflg" == "0" ];then
-#  grep -q -E "${BOOT_SCHEDULER_SSD}$|${BOOT_SCHEDULER_SSD} " /sys/block/${WKG_DRV}/queue/scheduler
-#  if [ $? -eq 0 ];then #make sure it is available, and not already chosen "[xxx]"
-#   echo $BOOT_SCHEDULER_SSD > /sys/block/${WKG_DRV}/queue/scheduler
-#  fi
-# fi
-#fi
 
 #/etc/rc.d/rc.hacks #190722 clumsy handling of special cases. 200209 removed, now handled in /usr/sbin/xorg-gpu-hacks called via xwin.
 
