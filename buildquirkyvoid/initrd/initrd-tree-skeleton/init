@@ -557,14 +557,17 @@ if [ ! -d /mnt/${WKG_DEV}/${SUBDIR}data ];then
  if [ "$PW" ];then
   PASSPHRASE="$(echo -n ${PW}xxxx | argon2 ${SALT} -l 32 -r)" #64 byte hash generated from password.
   echo -n "$PASSPHRASE" > /PASSPHRASE
-  fscryptctl add_key /mnt/${WKG_DEV} < /PASSPHRASE > /FSKEYID
+  fscryptctl add_key /mnt/${WKG_DEV} < /PASSPHRASE > /FSKEYID 2>/dev/null
   if [ $? -eq 0 ];then
    ALLOW_ASK_PW='yes'
    FSKEYID="$(cat /FSKEYID)"
    fscryptctl set_policy ${FSKEYID} /mnt/${WKG_DEV}/${SUBDIR}@home
    fscryptctl set_policy ${FSKEYID} /mnt/${WKG_DEV}/${SUBDIR}@files
   else
-   echo "${S145:-Sorry, the folders in the working partition cannot be encrypted. The password will only be set for root login.}"
+   echo -en "\\033[1;31m" #red foreground.
+   echo "${S145:-Sorry, the folders in the working partition cannot be encrypted. The password will only be set for root login.}" #red
+   echo -e "\\033[0;39m"
+   sleep 2
   fi
  fi
  
@@ -783,6 +786,8 @@ if [ "$newModprobeHardwareProfile" ];then
  echo "ModprobeHardwareProfile='${newModprobeHardwareProfile}'" > /mnt/${WKG_DEV}/${WKG_DIR}etc/modprobe.d/ModprobeHardwareProfile
  rm -rf /mnt/${WKG_DEV}/${WKG_DIR}etc/modprobe.d.${newModprobeHardwareProfile}
  cp -a /mnt/${WKG_DEV}/${WKG_DIR}etc/modprobe.d /mnt/${WKG_DEV}/${WKG_DIR}etc/modprobe.d.${newModprobeHardwareProfile}
+ touch /mnt/${WKG_DEV}/${WKG_DIR}etc/modprobe.d.${newModprobeHardwareProfile}/gpu.conf
+ touch /mnt/${WKG_DEV}/${WKG_DIR}etc/modprobe.d.${newModprobeHardwareProfile}/blacklist.conf
 fi
 
 ###broken video###
