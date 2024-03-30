@@ -14,7 +14,7 @@ PKGCAT_Desktop_sleep=" xlock_gui xlockmore "
 PKGCAT_Desktop_applet=" gfontsel glipper minixcal xclipboard "
 
 PKGCAT_System_Sub=" arandr blinky blueman-manager bluetooth-properties gnome-lirc-properties gpe-bluetooth gpointing-device-settings gstreamer-properties hardinfo keytouch-editor lxinput lxrandr palimpsest sysprof_dev usbview v4l2ucp xload "
-PKGCAT_System_process=" asapm batmon gastman gnome-power-statistics gnome-system-log gnome-system-monitor gpe-mininet gsmartcontrol lxtask mtink mtinkc nagstamon phoronix-test-suite pprocess pschedule timemon "
+PKGCAT_System_process=" asapm batmon gastman gnome-power-statistics gnome-system-log gnome-system-monitor gpe-mininet gsmartcontrol htop htop-wrapper iotop iotop-wrapper lxtask mtink mtinkc nagstamon phoronix-test-suite pprocess pschedule timemon "
 PKGCAT_System_memory=" freememapplet freememapplet_tray freememapplet_xlib memtest memtester "
 PKGCAT_System_print=" gtklp hpijs hplip "
 PKGCAT_System_storage=" gparted "
