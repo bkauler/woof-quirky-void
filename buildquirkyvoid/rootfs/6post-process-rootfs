@@ -1019,7 +1019,8 @@ fi
 #pinstall.sh does this, but just to be sure...
 chown root:messagebus rootfs/usr/libexec/dbus-daemon-launch-helper
 #void: suid bit was set in pinstall.sh but somehow cleared. fix...
-chmod 4755 rootfs/usr/libexec/dbus-daemon-launch-helper
+#chmod 4755 rootfs/usr/libexec/dbus-daemon-launch-helper
+chmod u+s rootfs/usr/libexec/dbus-daemon-launch-helper
 
 echo "Merge .xml.in to .xml ..."
 #20230215 there may be .xml.in files created via momanager, merge them...
