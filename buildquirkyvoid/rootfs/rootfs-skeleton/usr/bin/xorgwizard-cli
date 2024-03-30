@@ -84,7 +84,7 @@ esac
 
 if [ "$BOOT_DISABLEXORGWIZARD" = "yes" ];then #refer /etc/rc.d/BOOTCONSTRAINED and 3builddistro.
  echo
- echo "Sorry, the text-mode Xorg Wizard is disabled for this build of EasyOS."
+ echo "Sorry, the text-mode Xorg Wizard is disabled for this build of QV."
  exit
 fi
 
