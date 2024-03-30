@@ -505,11 +505,11 @@ fi
 
 #BOOTCONSTRAINED
 echo "Create rootfs/etc/rc.d/BOOTCONSTRAINED"
-echo "BOOT_ATIME='noatime'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #rc.sysinit will remount / with 'relatime' (constrains updating access time). 120707 change to noatime.
-echo "BOOT_SCHEDULER_SSD='kyber'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #my kernel defaults to 'cfq', change to 'deadline'. refer: http://tombuntu.com/index.php/2008/09/04/four-tweaks-for-using-linux-with-solid-state-drives/
+#echo "BOOT_ATIME='noatime'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #rc.sysinit will remount / with 'relatime' (constrains updating access time). 120707 change to noatime.
+#echo "BOOT_SCHEDULER_SSD='kyber'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #my kernel defaults to 'cfq', change to 'deadline'. refer: http://tombuntu.com/index.php/2008/09/04/four-tweaks-for-using-linux-with-solid-state-drives/
 echo "BOOT_BOARD='pc'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #120714 read by quicksetup.
 echo "BOOT_DISABLEXORGWIZARD='no'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #120723 read in xwin, also xorgwizard. also see below.
-echo "BOOT_DISABLEALSACONF='no'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #120724 'alsaconf' does not work on arm boards.
+#echo "BOOT_DISABLEALSACONF='no'" >> rootfs/etc/rc.d/BOOTCONSTRAINED #120724 'alsaconf' does not work on arm boards.
 
 #120709 debian squeeze has /usr/share/misc/pci.ids, usb.ids, which confuses some apps, create symlinks...
 echo "Create paths to pci.ids and usb.ids"
