@@ -1,0 +1,16 @@
+#!/bin/sh
+#take a snapshot.
+
+WKG_DEV="$1" #ex: sdc2
+SUBDIR="$2"  #ex: quirkyvoid/
+
+DATE="$(date +%y%m%d)" #ex: 240330
+
+mkdir -p /mnt/${WKG_DEV}/${SUBDIR}snapshots/${DATE}
+
+btrfs subvolume snapshot /mnt/${WKG_DEV}/${SUBDIR}@qv /mnt/${WKG_DEV}/${SUBDIR}snapshots/${DATE}/@qv
+btrfs subvolume snapshot /mnt/${WKG_DEV}/${SUBDIR}@home /mnt/${WKG_DEV}/${SUBDIR}snapshots/${DATE}/@home
+#btrfs subvolume snapshot /mnt/${WKG_DEV}/${SUBDIR}@files /mnt/${WKG_DEV}/${SUBDIR}snapshots/${DATE}/@files
+
+
+
